@@ -4,36 +4,14 @@
 from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
-from io import open
-import pickle
 import sqlite3 as lite
 import sys
 
-# Crea una clase Python para definir el interfaz de usuario de
-# la aplicación. Cuando se cree un objeto del tipo 'Aplicacion'
-# se ejecutará automáticamente el método __init__() qué 
-# construye y muestra la ventana con todos sus widgets: 
-
-
-class Pelicula:
-    # Constructor de clase
-    def __init__(self,identificador, titulo, duracion, lanzamiento):
-        self.titulo = titulo
-        self.duracion = duracion
-        self.lanzamiento = lanzamiento
-        self.id = identificador
-        #print('Se ha creado la película:',self.titulo)
-        
-    def __str__(self):
-        return '{} ({})'.format(self.titulo, self.lanzamiento)
-
-
-class Catalogo:
-    
-    # Constructor de clase
+class Catalogo:    
     def __init__(self):
         pass
 
+    #Metodo para ejecutar sentencia SQL
     def query(self,sql):
         con = lite.connect('catalogo.db')
         with con:
@@ -41,9 +19,11 @@ class Catalogo:
             cur.execute(sql)
             return cur
 
+    #Metodo para insertar un nuevo registro a la base.
     def catalogoSet(self,titulo,duracion,anio):
         self.query('INSERT INTO peliculas(Titulo,Duracion,anio) VALUES ("'+titulo+'","'+duracion+'","'+anio+'")')
         
+    #Metodo para obtener datos de la base
     def catalogoGet(self,sql):
         row=self.query(sql).fetchall()
         return row
